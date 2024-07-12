@@ -2,7 +2,7 @@ import { LoginFormData } from "../Pages/Auth/Login";
 import { RegisterFormData } from "../Pages/Auth/Register";
 import { baseUrl } from "./baseUrl";
 
-type HotelType = {
+export type HotelType = {
   _id: string;
   userId: string;
   name: string;

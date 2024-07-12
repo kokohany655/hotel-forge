@@ -18,7 +18,7 @@ const multerFilter = (
 
 const upload = multer({ storage: storage, fileFilter: multerFilter });
 
-export const uploadHotelImage = upload.array("images", 6);
+export const uploadHotelImage = upload.array("imagesFile", 6);
 
 export const uploadImages = async (
   req: Request,
