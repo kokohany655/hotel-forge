@@ -15,7 +15,5 @@ export const createHotelValidator = [
     .isArray()
     .withMessage(" Facilities type is required"),
   check("type").notEmpty().withMessage(" Hotel type is required"),
-  check("type").notEmpty().withMessage(" Hotel type is required"),
-  check("type").notEmpty().withMessage(" Hotel type is required"),
   validate,
 ];

@@ -103,3 +103,19 @@ export const getHotelById = async (id: string): Promise<HotelType> => {
     throw new Error(error.response?.data?.msg || "An error occurred");
   }
 };
+
+export const updateHotel = async (hotelFormData: FormData) => {
+  try {
+    const response = await baseUrl.put(
+      `/api/v1/hotel/${hotelFormData.get("hotelId")}`,
+      hotelFormData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.msg || "An error occurred");
+  }
+};

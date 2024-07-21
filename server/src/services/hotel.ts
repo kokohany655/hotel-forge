@@ -26,7 +26,8 @@ export const uploadImages = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.files) return next();
+    if (!req.files || req.files.length === 0) return next();
+    console.log({ req: req.files, reqs: req.body.images });
     const images = req.files as Express.Multer.File[];
     const imagesUrl = await Promise.all(
       images.map(async (image) => {
@@ -51,7 +52,7 @@ export const createHotel = async (req: Request, res: Response) => {
   try {
     const newHotel: HotelType = req.body;
     newHotel.userId = req.userId;
-    console.log({ newHotel });
+
     const hotel = new Hotel(newHotel);
     await hotel.save();
     res.status(201).json({ hotel, msg: "Created Hotel Successfully" });
@@ -76,9 +77,30 @@ export const getHotelById = async (req: Request, res: Response) => {
       userId: req.userId,
     });
     if (!hotel) {
-      res.status(400).json({ msg: "this hotel not found with this id" });
+      res.status(404).json({ msg: "this hotel not found with this id" });
     }
     res.status(200).json({ data: hotel });
+  } catch (error) {
+    res.status(500).json({ msg: "Can't fetching Hotel" });
+  }
+};
+
+export const updateHotel = async (req: Request, res: Response) => {
+  console.log({ req: req.body });
+  try {
+    const hotel = await Hotel.findByIdAndUpdate(
+      {
+        _id: req.params.id,
+        userId: req.userId,
+      },
+      req.body,
+      { new: true }
+    );
+    if (!hotel) {
+      res.status(404).json({ msg: "this hotel not found with this id " });
+    }
+
+    res.status(200).json({ hotel, msg: "updated successfully" });
   } catch (error) {
     res.status(500).json({ msg: "Can't fetching Hotel" });
   }

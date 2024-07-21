@@ -5,6 +5,7 @@ import {
   createHotel,
   getHotelById,
   getHotelsUser,
+  updateHotel,
   uploadHotelImage,
   uploadImages,
 } from "../services/hotel";
@@ -22,6 +23,9 @@ router
   )
   .get(verifyToken, getHotelsUser);
 
-router.route("/:id").get(verifyToken, getHotelById);
+router
+  .route("/:id")
+  .get(verifyToken, getHotelById)
+  .put(verifyToken, uploadHotelImage, uploadImages, updateHotel);
 
 export default router;
